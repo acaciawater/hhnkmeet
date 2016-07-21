@@ -15,28 +15,38 @@ import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+os.sys.path.append('/home/theo/texelmeet/acaciadata')
+os.sys.path.append('/home/theo/texelmeet/iom')
+
+SITE_ID = 1
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'b-=1#n7e*+pifds!-@)drkycrml3cog$it8(crk&rvg5cmwom%'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
 INSTALLED_APPS = (
+    'grappelli',
+    'polymorphic',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
+    'bootstrap3',
+    'hhnk',
+    'hhnk.apps.IomConfig',
+    'acacia',
+    'acacia.data',
+    'acacia.data.events',
+    'registration',
+    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -70,24 +80,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'hhnk.wsgi.application'
 
+LANGUAGE_CODE = 'nl-nl'
 
-# Database
-# https://docs.djangoproject.com/en/1.8/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-
-# Internationalization
-# https://docs.djangoproject.com/en/1.8/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Europe/Amsterdam'
 
 USE_I18N = True
 
@@ -95,8 +90,81 @@ USE_L10N = True
 
 USE_TZ = True
 
+# id of cartodb configuration
+CARTODB_ID = 1
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.8/howto/static-files/
+# id of akvoflow configuration
+AKVOFLOW_ID = 1
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+PHOTO_URL = os.path.join(MEDIA_URL, 'fotos')
+PHOTO_DIR = os.path.join(MEDIA_ROOT, 'fotos')
+
+LOGGING_URL = '/logs/'
+LOGGING_ROOT = os.path.join(BASE_DIR, 'logs')
+
+GRAPPELLI_ADMIN_TITLE='Beheer van HHNK Meet'
+
+# registration stuff
+ACCOUNT_ACTIVATION_DAYS = 7
+LOGIN_REDIRECT_URL = '/'
+REGISTRATION_AUTO_LOGIN = True
+
+AUTH_PROFILE_MODULE = 'iom.UserProfile'
+
+CELERY_RESULT_BACKEND = 'amqp'
+CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
+
+# Logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOGGING_ROOT, 'hhnk.log'),
+            'when': 'D',
+            'interval': 1, # every day a new file
+            'backupCount': 0,
+            'formatter': 'default'
+        },
+        'django': {
+            'level': 'DEBUG',
+            'class': 'logging.handlers.TimedRotatingFileHandler',
+            'filename': os.path.join(LOGGING_ROOT, 'django.log'),
+            'when': 'D',
+            'interval': 1, # every day a new file
+            'backupCount': 0,
+        },
+    },
+    'formatters': {
+        'default': {
+            'format': '%(levelname)s %(asctime)s %(name)s: %(message)s'
+        },
+    },
+    'loggers': {
+        'django.request': {
+            'handlers': ['django'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'iom': {
+            'handlers': ['file',],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+        'hhnk': {
+            'handlers': ['file',],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
+from secrets import *

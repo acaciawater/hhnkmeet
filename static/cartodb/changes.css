@@ -1,0 +1,48 @@
+@CHARSET "UTF-8";
+/** choropleth visualization */
+
+#allemetingen{
+  marker-fill-opacity: 0.8;
+  marker-line-color: #FFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-width: 11;
+  marker-fill: #1a9850;
+  marker-allow-overlap: true;
+}
+
+#allemetingen::labels {
+  text-name: [ecdelta];
+  text-face-name: 'DejaVu Sans Book';
+  text-size: 10;
+  text-label-position-tolerance: 10;
+  text-fill: #000;
+  text-halo-fill: #FFF;
+  text-halo-radius: 1;
+  text-dy: -10;
+  text-allow-overlap: false;
+  text-placement: point;
+  text-placement-type: simple;
+}
+#allemetingen [ ec_toename > 4000] {
+   marker-fill: #7B00B4;
+}
+#allemetingen [ ec_toename <= 4000] {
+   marker-fill: #B40903;
+}
+#allemetingen [ ec_toename <= 1000] {
+   marker-fill: #FF5C00;
+}
+
+#allemetingen [ ec_toename <= 100] {
+   marker-fill: #FFCC00;
+}
+#allemetingen [ ec_toename <= -100] {
+   marker-fill: #229A00;
+}
+#allemetingen [ ec_toename <= -1000] {
+   marker-fill: #40a3dd;
+}
+#allemetingen [ ec_toename <= -4000] {
+   marker-fill: #0063ff;
+}

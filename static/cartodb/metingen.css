@@ -1,0 +1,44 @@
+/** choropleth visualization */
+
+#allemetingen{
+  marker-fill-opacity: 0.9;
+  marker-line-color: #FFFFFF;
+  marker-line-width: 1;
+  marker-line-opacity: 1;
+  marker-width: 11;
+  marker-fill: #0080ff;
+  marker-allow-overlap: true;
+}
+
+#allemetingen::labels {
+  text-name: [ecms];
+  text-face-name: 'DejaVu Sans Book';
+  text-size: 10;
+  text-label-position-tolerance: 10;
+  text-fill: #000000;
+  text-halo-fill: #FFF;
+  text-halo-radius: 1;
+  text-dy: -12;
+  text-allow-overlap: false;
+  text-placement: point;
+  text-placement-type: simple;
+}
+
+#allemetingen [ ec > 20000] {
+   marker-fill: #B81609;
+}
+#allemetingen [ ec < 20000] {
+   marker-fill: #FF5C00;
+}
+#allemetingen [ ec < 10000] {
+   marker-fill: #FFCC00;
+}
+#allemetingen [ ec < 5000] {
+   marker-fill: #229A00;
+}
+#allemetingen [ ec < 2000] {
+   marker-fill: #5CA2D1;
+}
+#allemetingen [ ec < 1000] {
+   marker-fill: #0080ff;
+}
