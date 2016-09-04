@@ -66,4 +66,5 @@ logs/
 media/
 static/
 .settings/
+secrets.py
 
