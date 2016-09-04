@@ -60,3 +60,10 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# django
+logs/
+media/
+static/
+.settings/
+
