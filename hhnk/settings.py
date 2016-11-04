@@ -46,7 +46,6 @@ INSTALLED_APPS = (
     'acacia.data',
     'acacia.data.events',
     'registration',
-    'djcelery',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -117,9 +116,6 @@ REGISTRATION_AUTO_LOGIN = True
 
 AUTH_PROFILE_MODULE = 'iom.UserProfile'
 
-CELERY_RESULT_BACKEND = 'amqp'
-CELERY_TASK_RESULT_EXPIRES = 18000  # 5 hours.
-
 # Logging
 LOGGING = {
     'version': 1,
@@ -151,6 +147,11 @@ LOGGING = {
     'loggers': {
         'django.request': {
             'handlers': ['django'],
+            'level': 'WARNING',
+            'propagate': True,
+        },
+        'acacia': {
+            'handlers': ['file',],
             'level': 'DEBUG',
             'propagate': True,
         },
